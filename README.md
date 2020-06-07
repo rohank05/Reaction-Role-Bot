@@ -6,6 +6,8 @@ install node and node modules
 node modules required 
   1. discord.js
   2. mysql
+
+
 Install mysql server
 create a db name reaction
 edit token in .env
