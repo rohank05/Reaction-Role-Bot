@@ -1,6 +1,7 @@
 var reactChannel;
 const Discord = require('discord.js')
 var cancel;
+
 module.exports.run = async (client,message,args,con)=>{
     guildID = message.guild.id;
     if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("You don't have correct permission")
@@ -70,12 +71,13 @@ module.exports.run = async (client,message,args,con)=>{
     
     const embed = new Discord.MessageEmbed()
         .setTitle(embtitle)
-        .setColor("color")
+        .setColor(color)
         .setDescription(embstr());
 
     const guild = client.guilds.cache.get(guildID);
     const botmsg = await guild.channels.cache.find(channel => channel.id === reactChannel).send(embed);
-
+    message.channel.send("Reaction Role has been created successfully")
+    
 
     for(var i = 0;i<n;i++){
         var emoid = a[i].slice(1,-1)
@@ -89,8 +91,10 @@ module.exports.run = async (client,message,args,con)=>{
             
         }
         for(var i =0; i<n;i++){
-            var emoname = a[i].split(':')
-            con.query(`INSERT INTO reactrole VALUES('${c[i]}','${emoname[1]}','${embtitle}')`)
+            var emoid = a[i].slice(1,-1)
+            emoid = emoid.split(':')
+            emoid = emoid[2];
+            con.query(`INSERT INTO reactrole VALUES('${c[i]}','${emoid}','${botmsg.id}')`)
         }
 }
 
